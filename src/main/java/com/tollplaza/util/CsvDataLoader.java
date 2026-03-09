@@ -77,27 +77,35 @@ public class CsvDataLoader {
     }
     
     private boolean isHeaderRow(String[] record) {
-        // Check if first column looks like a header (contains "name" or similar)
+        // Check if first column looks like a header (contains "longitude" or "name")
         if (record.length > 0) {
             String firstColumn = record[0].toLowerCase().trim();
             return firstColumn.equals("name") || 
                    firstColumn.equals("toll_plaza") || 
-                   firstColumn.equals("plaza_name");
+                   firstColumn.equals("plaza_name") ||
+                   firstColumn.equals("longitude");
+        }
+        // Also check if third column contains "toll_name" header
+        if (record.length > 2) {
+            String thirdColumn = record[2].toLowerCase().trim();
+            if (thirdColumn.equals("toll_name")) {
+                return true;
+            }
         }
         return false;
     }
     
     private TollPlaza parseCsvRecord(String[] fields) {
         try {
-            // Expected format: name, latitude, longitude
+            // Expected format: longitude, latitude, toll_name, geo_state
             if (fields.length < 3) {
-                logger.warn("Skipping malformed CSV record: insufficient fields (expected 3, got {})", fields.length);
+                logger.warn("Skipping malformed CSV record: insufficient fields (expected at least 3, got {})", fields.length);
                 return null;
             }
             
-            String name = fields[0].trim();
+            double longitude = Double.parseDouble(fields[0].trim());
             double latitude = Double.parseDouble(fields[1].trim());
-            double longitude = Double.parseDouble(fields[2].trim());
+            String name = fields[2].trim();
             
             // Validate coordinates
             if (latitude < -90 || latitude > 90) {

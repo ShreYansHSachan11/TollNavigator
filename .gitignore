@@ -62,23 +62,6 @@ application-local.properties
 *.swp
 *~
 
-# Build and deployment scripts (local development helpers)
-BUILD-AND-RUN.bat
-FIX-AND-RUN.bat
-REBUILD.bat
-RUN-DIRECT.bat
-RUN-WITH-CORRECT-KEY.bat
+# Local run scripts (contain API keys)
 run-with-mappls.bat
 run-with-mappls.ps1
-RUN.bat
-START-APP.ps1
-START.bat
-TEST-MAPPLS-API.bat
-test-mappls-api.ps1
-TEST-REST-API-KEY.bat
-
-# Documentation files (local notes and summaries)
-FINAL_VALIDATION_SUMMARY.md
-MAPPLS_TESTING_GUIDE.md
-START_HERE.md
-TASK_14_COMPLETION.md
